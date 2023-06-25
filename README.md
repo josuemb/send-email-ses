@@ -4,7 +4,7 @@ This is a demo to send email with [Amazon Simple Email Service](https://aws.amaz
 # Compilation
 ## Prerequisites
 To compile send-email-ses you will ned:
-- JDK ver 8.0+ (Java 19 is recommended).
+- JDK ver 11.0+ (Java 19 is recommended).
 - [Apache Maven](https://maven.apache.org/).
 ## How to compile it
 To compile send-email-ses you will need to execute next maven command:
