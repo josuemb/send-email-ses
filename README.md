@@ -4,7 +4,7 @@ This is a demo to send email with [Amazon Simple Email Service](https://aws.amaz
 # Compilation
 ## Prerequisites
 To compile send-email-ses you will ned:
-- JDK ver 11.0+ (Java 19 is recommended).
+- JDK ver 11.0+. [Amazon Coretto](https://aws.amazon.com/corretto/) distribution is recommended.
 - [Apache Maven](https://maven.apache.org/).
 ## How to compile it
 To compile send-email-ses you will need to execute next maven command:
@@ -17,7 +17,7 @@ Why did not just execute
 
 <code>mvn clean package</code>?
 
-See (https://andresalmiray.com/maven-verify-or-clean-install/) from [@aalmiray](https://twitter.com/aalmiray).
+See: https://andresalmiray.com/maven-verify-or-clean-install/ from [@aalmiray](https://twitter.com/aalmiray).
 
 Once compilates successfully you can use the fat jar (a jar file with all dependencies included) like a command line tool to test by sending emails using  [Amazon Simple Email Service](https://aws.amazon.com/ses/).
 
