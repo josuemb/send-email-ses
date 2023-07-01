@@ -22,6 +22,7 @@
         <javax.mail.version>1.6.2</javax.mail.version>
         <commons-cli.version>1.5.0</commons-cli.version>
         <netty-handler.version>4.1.94.Final</netty-handler.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
     </properties>
 
     <dependencyManagement>
@@ -100,6 +101,12 @@
                     <artifactId>netty-transport-native-unix-common</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
         </dependency>
 
         <dependency>

@@ -29,16 +29,19 @@ And it will show the coomand help, like this:
 
 <code>
 PS C:\Temp\send-email-ses> java -jar .\target\send-email-ses.jar</br>
+Picked up JAVA_TOOL_OPTIONS: -Dlog4j2.formatMsgNoLookups=true</br>
 Missing required options: f, t</br>
 usage: send-email</br>
  -a,--attachments <attachments>   Email attachement(s)</br>
  -b,--body <body>                 Email body</br>
  -f,--from <from>                 From email address</br>
+ -p,--protocol <protocol>         Protocol to send email (SMTP | API).</br>
+                                  Default to API.</br>
  -r,--repetitions <repetitions>   Number of repetitions (emails to be
                                   sent)</br>
  -s,--subject <subject>           Email subject</br>
  -t,--to <to>                     To email address</br>
-</code>
+ </code>
 
 ## Creating and configuring [Amazon Simple Email Service](https://aws.amazon.com/ses/)
 In order create and get [Amazon Simple Email Service](https://aws.amazon.com/ses/)  ready to be used you will need to do the next steps:
@@ -52,9 +55,15 @@ In order create and get [Amazon Simple Email Service](https://aws.amazon.com/ses
 
 ## Configure send-email-ses to connect to [Amazon Simple Email Service](https://aws.amazon.com/ses/)
 To enable send-email-ses to send emails using your [Amazon Simple Email Service](https://aws.amazon.com/ses/) verified identity you need to create the next environment varibles:
-1. <code>AWS_REGION</code> (set the region were your created the [Amazon Simple Email Service](https://aws.amazon.com/ses/) verified identity). </br>Example value: <code>us-east-1</code>.
-2. <code>AWS_ACCESS_KEY_ID</code> (set the access key of your IAM credentials created to use the service). </br>Example value: <code>FKGRTI6GFKXGT6TMVJ5E</code>
-3. <code>AWS_SECRET_ACCESS_KEY</code> (Set the secret of your IAM credentials created to use the service). </br>Example value: <code>YOhg+FzepvjtftLNJGUlP4IXkwSkAr+ZQmMgCC4RE</code>.
+- For SMTP protocol:
+    1. <code>SMTP_HOST</code> (set the host for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Usually: <code>email-smtp.us-east-1.amazonaws.com</code>.
+    2. <code>SMTP_PORT</code> (set the port for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>587</code>.
+    3. <code>SMTP_USERNAME</code> (set the username for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>BTIARO8GHKXGYWOBXQKB</code>.
+    4. <code>SMTP_PASSWORD</code> (set the password for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>AFhfouBjJU8btiY4hkhAdS/oCilfa7iE7x1rzPqaPhnN</code>.
+- For API protocol:
+  1. <code>AWS_REGION</code> (set the region were your created the [Amazon Simple Email Service](https://aws.amazon.com/ses/) verified identity). </br>Example value: <code>us-east-1</code>.
+  2. <code>AWS_ACCESS_KEY_ID</code> (set the access key of your IAM credentials created to use the service). </br>Example value: <code>FKGRTI6GFKXGT6TMVJ5E</code>
+  3. <code>AWS_SECRET_ACCESS_KEY</code> (Set the secret of your IAM credentials created to use the service). </br>Example value: <code>YOhg+FzepvjtftLNJGUlP4IXkwSkAr+ZQmMgCC4RE</code>.
 
 ## Use send-email-ses to send test emails
 
@@ -73,9 +82,13 @@ To enable send-email-ses to send emails using your [Amazon Simple Email Service]
 ### Summary of sent emails
 The execution of send-email-ses will show you some useful statistics like this:</br>
 <code>
-[main] INFO com.amazon.aws.App - Emails sent: 3.</br>
-[main] INFO com.amazon.aws.App - Total duration: 0:00:02.824 (H:MM:SS.MS)</br>
-[main] INFO com.amazon.aws.App - Average duration: 0:00:00.941 (H:MM:SS.MS)</br>
-[main] INFO com.amazon.aws.App - Average speed: 1.062 (emails/second)</br>
+[main] INFO com.amazon.aws.App - Command Started</br>
+[main] INFO com.amazon.aws.App - Sending 1 emails...</br>
+[main] INFO com.amazon.aws.App - Process: SendEmail finished.</br>
+[main] INFO com.amazon.aws.App - Protocol used: SMTP.</br>
+[main] INFO com.amazon.aws.App - Emails sent: 1.</br>
+[main] INFO com.amazon.aws.App - Total duration: 0:00:02.226 (H:MM:SS.MS)</br>
+[main] INFO com.amazon.aws.App - Average duration: 0:00:02.226 (H:MM:SS.MS)</br>
+[main] INFO com.amazon.aws.App - Average speed: 0.449 (emails/second)</br>
 [main] INFO com.amazon.aws.App - Command Finished</br>
 </code>

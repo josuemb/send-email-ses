@@ -4,6 +4,7 @@ package com.amazon.aws;
  * Stores the process to send the email.
  */
 public class SendEmailInfo {
+    private ProtocolEnum protocol;
     private String from;
     private String to;
     private String subject;
@@ -19,11 +20,20 @@ public class SendEmailInfo {
      * @param subject Email subject
      * @param body    Email body
      */
-    public SendEmailInfo(String from, String to, String subject, String body) {
+    public SendEmailInfo(ProtocolEnum protocol, String from, String to, String subject, String body) {
+        this.protocol = protocol;
         this.from = from;
         this.to = to;
         this.subject = subject;
         this.body = body;
+    }
+
+    public ProtocolEnum getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(ProtocolEnum protocol) {
+        this.protocol = protocol;
     }
 
     /**
