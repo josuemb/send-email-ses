@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 
 import org.apache.commons.cli.CommandLine;
@@ -216,6 +217,8 @@ public class App {
                                 .parallel()
                                 .runOn(Schedulers.parallel())
                                 .subscribe(response -> logger.debug(response.toString()));
+                logger.debug("Closing connection");
+                client.close();
                 emailSentOk = true;
                 logger.debug("sendEmail Finished");
                 return emailSentOk;
@@ -244,6 +247,14 @@ public class App {
                                 .parallel()
                                 .runOn(Schedulers.parallel())
                                 .subscribe(response -> logger.debug(response.toString()));
+                try {
+                        logger.debug("Closing connection");
+                        session.getTransport().close();
+                } catch (NoSuchProviderException e) {
+                        logger.error("Error closing session", e);
+                } catch (MessagingException e) {
+                        logger.error("Error closing session", e);
+                }
                 emailSentOk = true;
                 logger.debug("sendEmail Finished");
                 return emailSentOk;
