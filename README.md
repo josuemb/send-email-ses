@@ -21,6 +21,8 @@ See: https://andresalmiray.com/maven-verify-or-clean-install/ from [@aalmiray](h
 
 Once compilates successfully you can use the fat jar (a jar file with all dependencies included) like a command line tool to test by sending emails using  [Amazon Simple Email Service](https://aws.amazon.com/ses/).
 
+*Note*: Fat jar is being generated as a convenience for making call from command line easier.
+
 The fat jar will be located in the target directory inside the main project folder ant it could be executed like.
 - <code>java -jar ./target/send-email-ses.jar</code> (in Linux/MacOs)
 - <code>java -jar .\target\send-email-ses.jar</code> (in Windows)

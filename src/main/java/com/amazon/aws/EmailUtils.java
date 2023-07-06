@@ -161,6 +161,12 @@ public class EmailUtils {
         return client.sendEmail(sendEmailRequest).join();
     }
 
+    /**
+     * Create SMTP session with Simple Email Service service and API V2 using
+     * STARTTLS
+     * 
+     * @return New created {@link Session} object.
+     */
     public static Session createSmtpSession() {
         logger.debug("createSmtpSession Started");
         Session session = null;
@@ -189,6 +195,12 @@ public class EmailUtils {
         return session;
     }
 
+    /**
+     * Get SMTP settings from environment variables.
+     * 
+     * @see {@link https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html}
+     * @return New object with SMT settings. In case of error it will return null.
+     */
     private static SmtpSettings getSmtpSettings() {
         logger.debug("sendEmail Started");
         SmtpSettings settings = null;
@@ -237,6 +249,23 @@ public class EmailUtils {
         return settings;
     }
 
+    /**
+     * Send email to Simple Email Service using SMTP and Java Mail API.
+     * 
+     * @param session     Object with previously opened session to be reused by all
+     *                    the calls.
+     * @param from        Email from address (origin)
+     * @param to          Email to address (destination)
+     * @param subject     Email subject
+     * @param body        Email Body
+     * @param attachments Attachment file path to be sent. In case you want to send
+     *                    several, you need to provide several paths divided by OS
+     *                    file separator. IN case you send null or empty String
+     *                    there will not be attached files into the email message
+     * @return true if email was sent successfully, false otherwise.
+     * @throws AddressException
+     * @throws MessagingException
+     */
     public static boolean sendEmailWithSmtp(Session session, String from, String to, String subject, String body,
             String attachments) throws AddressException, MessagingException {
         logger.debug("sendEmail Started");
