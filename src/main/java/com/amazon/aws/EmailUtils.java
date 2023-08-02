@@ -47,7 +47,7 @@ public class EmailUtils {
     private static final String ENV_SMTP_HOST = "SMTP_HOST";
     private static final String ENV_SMTP_PORT = "SMTP_PORT";
     private static final String ENV_SMTP_USERNAME = "SMTP_USERNAME";
-    private static final String ENV_SMTP_PASSWORD = "SMTP_PASSWORD";
+    private static final String ENV_SMTP_PWD = "SMTP_PASSWORD";
 
     /**
      * Create a new {@link SesV2AsyncClient} object with convenient defaults.
@@ -233,7 +233,7 @@ public class EmailUtils {
                 settingsError = true;
                 logger.error(String.format("La variable de ambiente %s no existe o está vacía", ENV_SMTP_USERNAME));
             }
-            password = System.getenv(ENV_SMTP_PASSWORD);
+            password = System.getenv(ENV_SMTP_PWD);
             if (strPort == null || strPort.trim().isEmpty()) {
                 settingsError = true;
                 logger.error(String.format("La variable de ambiente %s no existe o está vacía", ENV_SMTP_PORT));
