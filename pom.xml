@@ -21,7 +21,7 @@
         <projectreactor.version>2022.0.8</projectreactor.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <commons-cli.version>1.5.0</commons-cli.version>
-        <netty.version>4.1.130.Final</netty.version>
+        <netty.version>4.1.136.Final</netty.version>
         <javax.mail.version>1.6.2</javax.mail.version>
     </properties>
 
