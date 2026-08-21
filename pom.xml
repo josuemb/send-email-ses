@@ -21,7 +21,7 @@
         <projectreactor.version>2022.0.8</projectreactor.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <commons-cli.version>1.5.0</commons-cli.version>
-        <netty-handler.version>4.1.94.Final</netty-handler.version>
+        <netty.version>4.1.130.Final</netty.version>
         <javax.mail.version>1.6.2</javax.mail.version>
     </properties>
 
@@ -40,6 +40,21 @@
                 <version>${projectreactor.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http2</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+                <version>${netty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -112,7 +127,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-handler</artifactId>
-            <version>${netty-handler.version}</version>
+            <version>${netty.version}</version>
         </dependency>
 
         <dependency>
