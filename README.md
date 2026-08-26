@@ -3,8 +3,8 @@ This is a demo to send email with [Amazon Simple Email Service](https://aws.amaz
 
 # Compilation
 ## Prerequisites
-To compile send-email-ses you will ned:
-- JDK ver 11.0+. [Amazon Coretto](https://aws.amazon.com/corretto/) distribution is recommended.
+To compile send-email-ses you will need:
+- JDK ver 25+. [Amazon Corretto](https://aws.amazon.com/corretto/) distribution is recommended.
 - [Apache Maven](https://maven.apache.org/).
 ## How to compile it
 To compile send-email-ses you will need to execute next maven command:
@@ -19,15 +19,15 @@ Why did not just execute
 
 See: https://andresalmiray.com/maven-verify-or-clean-install/ from [@aalmiray](https://twitter.com/aalmiray).
 
-Once compilates successfully you can use the fat jar (a jar file with all dependencies included) like a command line tool to test by sending emails using  [Amazon Simple Email Service](https://aws.amazon.com/ses/).
+Once it compiles successfully you can use the fat jar (a jar file with all dependencies included) like a command line tool to test by sending emails using  [Amazon Simple Email Service](https://aws.amazon.com/ses/).
 
 *Note*: Fat jar is being generated as a convenience for making call from command line easier.
 
-The fat jar will be located in the target directory inside the main project folder ant it could be executed like.
+The fat jar will be located in the target directory inside the main project folder and it could be executed like.
 - <code>java -jar ./target/send-email-ses.jar</code> (in Linux/MacOs)
 - <code>java -jar .\target\send-email-ses.jar</code> (in Windows)
 
-And it will show the coomand help, like this:
+And it will show the command help, like this:
 
 <code>
 PS C:\Temp\send-email-ses> java -jar .\target\send-email-ses.jar</br>
