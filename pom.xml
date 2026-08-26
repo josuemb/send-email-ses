@@ -10,17 +10,17 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.shade.plugin.version>3.6.0</maven.shade.plugin.version>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-        <exec-maven-plugin.version>3.4.1</exec-maven-plugin.version>
-        <aws.java.sdk.version>2.31.49</aws.java.sdk.version>
+        <maven.compiler.release>25</maven.compiler.release>
+        <maven.shade.plugin.version>3.6.2</maven.shade.plugin.version>
+        <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
+        <maven.assembly.plugin.version>3.8.0</maven.assembly.plugin.version>
+        <exec-maven-plugin.version>3.6.3</exec-maven-plugin.version>
+        <aws.java.sdk.version>2.54.4</aws.java.sdk.version>
         <slf4j.version>2.0.18</slf4j.version>
-        <junit5.version>5.11.4</junit5.version>
-        <projectreactor.version>2024.0.4</projectreactor.version>
-        <jakarta.mail.version>2.0.3</jakarta.mail.version>
-        <commons-cli.version>1.9.0</commons-cli.version>
+        <junit5.version>6.1.3</junit5.version>
+        <projectreactor.version>2025.0.7</projectreactor.version>
+        <jakarta.mail.version>2.0.5</jakarta.mail.version>
+        <commons-cli.version>1.11.0</commons-cli.version>
         <netty.version>4.2.17.Final</netty.version>
     </properties>
 
@@ -172,6 +172,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
