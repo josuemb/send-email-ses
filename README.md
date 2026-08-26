@@ -1,96 +1,112 @@
 # send-email-ses
-This is a demo to send email with [Amazon Simple Email Service](https://aws.amazon.com/ses/) API V2 and [AWS JDK V2](https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/services/sesv2/package-summary.html).
 
-# Compilation
-## Prerequisites
-To compile send-email-ses you will need:
-- JDK ver 25+. [Amazon Corretto](https://aws.amazon.com/corretto/) distribution is recommended.
+A command-line tool to send email through [Amazon Simple Email Service (SES)](https://aws.amazon.com/ses/),
+built with the [AWS SDK for Java v2](https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/services/sesv2/package-summary.html).
+It supports both the **SES API** and **SMTP**, plain or with attachments, and can
+send in batches for quick testing.
+
+## Requirements
+
+- **JDK 25+** — [Amazon Corretto](https://aws.amazon.com/corretto/) recommended.
 - [Apache Maven](https://maven.apache.org/).
-## How to compile it
-To compile send-email-ses you will need to execute next maven command:
+- An AWS account with a verified SES identity (see [Set up Amazon SES](#set-up-amazon-ses) below).
 
-<code>mvn verify</code></br>
+## Quick start
 
-Wait a minute...
+```bash
+mvn verify                                    # build the fat jar -> target/send-email-ses.jar
+export AWS_REGION=us-east-1                    # your SES region + IAM credentials
+export AWS_ACCESS_KEY_ID=<your-access-key-id>
+export AWS_SECRET_ACCESS_KEY=<your-secret-access-key>
+java -jar target/send-email-ses.jar --from sender@example.com --to recipient@example.com
+```
 
-Why did not just execute
+## Build
 
-<code>mvn clean package</code>?
+```bash
+mvn verify
+```
 
-See: https://andresalmiray.com/maven-verify-or-clean-install/ from [@aalmiray](https://twitter.com/aalmiray).
+> Why `mvn verify` and not `mvn clean package`? See
+> [Maven: verify or clean install](https://andresalmiray.com/maven-verify-or-clean-install/)
+> by [@aalmiray](https://twitter.com/aalmiray).
 
-Once it compiles successfully you can use the fat jar (a jar file with all dependencies included) like a command line tool to test by sending emails using  [Amazon Simple Email Service](https://aws.amazon.com/ses/).
+The build produces a **fat jar** (all dependencies bundled) at
+`target/send-email-ses.jar`, runnable directly from the command line:
 
-*Note*: Fat jar is being generated as a convenience for making call from command line easier.
+- Linux/macOS: `java -jar ./target/send-email-ses.jar`
+- Windows: `java -jar .\target\send-email-ses.jar`
 
-The fat jar will be located in the target directory inside the main project folder and it could be executed like.
-- <code>java -jar ./target/send-email-ses.jar</code> (in Linux/MacOs)
-- <code>java -jar .\target\send-email-ses.jar</code> (in Windows)
+Run it with no required options to see the help:
 
-And it will show the command help, like this:
+```
+usage: send-email
+ -a,--attachments <attachments>   Email attachment(s)
+ -b,--body <body>                 Email body
+ -f,--from <from>                 From email address
+ -p,--protocol <protocol>         Protocol to send email (SMTP | API). Default: API.
+ -r,--repetitions <repetitions>   Number of repetitions (emails to send)
+ -s,--subject <subject>           Email subject
+ -t,--to <to>                     To email address
+```
 
-<code>
-PS C:\Temp\send-email-ses> java -jar .\target\send-email-ses.jar</br>
-Picked up JAVA_TOOL_OPTIONS: -Dlog4j2.formatMsgNoLookups=true</br>
-Missing required options: f, t</br>
-usage: send-email</br>
- -a,--attachments <attachments>   Email attachement(s)</br>
- -b,--body <body>                 Email body</br>
- -f,--from <from>                 From email address</br>
- -p,--protocol <protocol>         Protocol to send email (SMTP | API).</br>
-                                  Default to API.</br>
- -r,--repetitions <repetitions>   Number of repetitions (emails to be
-                                  sent)</br>
- -s,--subject <subject>           Email subject</br>
- -t,--to <to>                     To email address</br>
- </code>
+## Set up Amazon SES
 
-## Creating and configuring [Amazon Simple Email Service](https://aws.amazon.com/ses/)
-In order create and get [Amazon Simple Email Service](https://aws.amazon.com/ses/)  ready to be used you will need to do the next steps:
-1. Having a valid AWS Account or acreate a new one. See: https://portal.aws.amazon.com/billing/signup.
-2. Set up a new [Amazon Simple Email Service](https://aws.amazon.com/ses/) in your account. See: https://docs.aws.amazon.com/ses/latest/dg/setting-up.html or have a oreviously created one.
-3. Create and Verify [Amazon Simple Email Service](https://aws.amazon.com/ses/) Identity: https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html.
-4. In case you want to send emails to any email address you need to move [Amazon Simple Email Service](https://aws.amazon.com/ses/) out of the sanbox (production mode). See: https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html. Otherwise, you can just test sending emails using the simulator, like this: https://docs.aws.amazon.com/ses/latest/dg/send-an-email-from-console.html#send-email-simulator.
-5. Create a new [https://docs.aws.amazon.com/iam/index.html](IAM) user without console access: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html.
-6. Create a new access key for the recently created user: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html and keep the access key and password as well as the region you created it, you will need them to send emails later.
-7. Create a sending authorization policy and assign it to the recently created user. Make sure to enable <code>ses:SendRawEmail</code> permission that is needed to use this demo. Note: To assign this IAM policy you will need the recently created user ARN. See: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html#id_users_create_aws-identifiers.
+1. Have (or [create](https://portal.aws.amazon.com/billing/signup)) an AWS account.
+2. [Set up SES](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html) in your account.
+3. [Create and verify a sending identity](https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html).
+4. To send to arbitrary addresses, [move SES out of the sandbox](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html). Otherwise use the [mailbox simulator](https://docs.aws.amazon.com/ses/latest/dg/send-an-email-from-console.html#send-email-simulator).
+5. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) without console access.
+6. [Create an access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for that user; keep the key id, secret, and region.
+7. Attach a policy granting **`ses:SendRawEmail`** (required by this tool) to the user.
 
-## Configure send-email-ses to connect to [Amazon Simple Email Service](https://aws.amazon.com/ses/)
-To enable send-email-ses to send emails using your [Amazon Simple Email Service](https://aws.amazon.com/ses/) verified identity you need to create the next environment varibles:
-- For SMTP protocol:
-    1. <code>SMTP_HOST</code> (set the host for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Usually: <code>email-smtp.us-east-1.amazonaws.com</code>.
-    2. <code>SMTP_PORT</code> (set the port for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>587</code>.
-    3. <code>SMTP_USERNAME</code> (set the username for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>BTIARO8GHKXGYWOBXQKB</code>.
-    4. <code>SMTP_PASSWORD</code> (set the password for [Amazon Simple Email Service](https://aws.amazon.com/ses/)). </br>Example: <code>AFhfouBjJU8btiY4hkhAdS/oCilfa7iE7x1rzPqaPhnN</code>.
-- For API protocol:
-  1. <code>AWS_REGION</code> (set the region were your created the [Amazon Simple Email Service](https://aws.amazon.com/ses/) verified identity). </br>Example value: <code>us-east-1</code>.
-  2. <code>AWS_ACCESS_KEY_ID</code> (set the access key of your IAM credentials created to use the service). </br>Example value: <code>FKGRTI6GFKXGT6TMVJ5E</code>
-  3. <code>AWS_SECRET_ACCESS_KEY</code> (Set the secret of your IAM credentials created to use the service). </br>Example value: <code>YOhg+FzepvjtftLNJGUlP4IXkwSkAr+ZQmMgCC4RE</code>.
+## Configure credentials
 
-## Use send-email-ses to send test emails
+Set the environment variables for your chosen protocol. **Use your own values — the examples below are placeholders.**
 
-### To send an email with default subject and content
-<code>java -jar send-email-ses.jar --from sender@mail.contoso.com --to email@provider.com</code>.</br>
+**API protocol:**
 
-### To send an email with custom subject and content
-<code>java -jar send-email-ses.jar --from sender@mail.contoso.com --to email@provider.com '' --subject "Lorem Ipsum" --body "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</code>.</br>
+| Variable | Example |
+|---|---|
+| `AWS_REGION` | `us-east-1` |
+| `AWS_ACCESS_KEY_ID` | `<your-access-key-id>` |
+| `AWS_SECRET_ACCESS_KEY` | `<your-secret-access-key>` |
 
-### To send an email with custom subject and content and an attachment
-<code>java -jar send-email-ses.jar --from sender@mail.contoso.com --to email@provider.com '' --subject "Lorem Ipsum" --body "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." --attachments "/home/johndoe/lorem-ipsum.pdf"</code>.</br>
+**SMTP protocol:**
 
-### To send 10 emails with default subject and content
-<code>java -jar send-email-ses.jar --from sender@mail.contoso.com --to email@provider.com --repetitions 10</code>.</br>
+| Variable | Example |
+|---|---|
+| `SMTP_HOST` | `email-smtp.us-east-1.amazonaws.com` |
+| `SMTP_PORT` | `587` |
+| `SMTP_USERNAME` | `<your-smtp-username>` |
+| `SMTP_PASSWORD` | `<your-smtp-password>` |
 
-### Summary of sent emails
-The execution of send-email-ses will show you some useful statistics like this:</br>
-<code>
-[main] INFO com.amazon.aws.App - Command Started</br>
-[main] INFO com.amazon.aws.App - Sending 1 emails...</br>
-[main] INFO com.amazon.aws.App - Process: SendEmail finished.</br>
-[main] INFO com.amazon.aws.App - Protocol used: SMTP.</br>
-[main] INFO com.amazon.aws.App - Emails sent: 1.</br>
-[main] INFO com.amazon.aws.App - Total duration: 0:00:02.226 (H:MM:SS.MS)</br>
-[main] INFO com.amazon.aws.App - Average duration: 0:00:02.226 (H:MM:SS.MS)</br>
-[main] INFO com.amazon.aws.App - Average speed: 0.449 (emails/second)</br>
-[main] INFO com.amazon.aws.App - Command Finished</br>
-</code>
+## Usage examples
+
+```bash
+# Default subject and body
+java -jar send-email-ses.jar --from sender@example.com --to recipient@example.com
+
+# Custom subject and body
+java -jar send-email-ses.jar --from sender@example.com --to recipient@example.com \
+  --subject "Lorem Ipsum" --body "Lorem ipsum dolor sit amet..."
+
+# With an attachment
+java -jar send-email-ses.jar --from sender@example.com --to recipient@example.com \
+  --subject "Lorem Ipsum" --body "Lorem ipsum..." --attachments "/path/to/file.pdf"
+
+# Send 10 emails
+java -jar send-email-ses.jar --from sender@example.com --to recipient@example.com --repetitions 10
+```
+
+## Output
+
+Each run prints sending statistics:
+
+```
+INFO com.amazon.aws.App - Sending 1 emails...
+INFO com.amazon.aws.App - Protocol used: SMTP.
+INFO com.amazon.aws.App - Emails sent: 1.
+INFO com.amazon.aws.App - Total duration: 0:00:02.226 (H:MM:SS.MS)
+INFO com.amazon.aws.App - Average speed: 0.449 (emails/second)
+```
